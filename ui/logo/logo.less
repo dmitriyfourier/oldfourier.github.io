@@ -1,0 +1,68 @@
+/* logo */
+.logo-settings() {
+    @logo-margin: 0;
+    @logo-width: 15em;
+    @logo-icon-width: 60px;
+    @logo-gutter-width: 16px;
+    @logo-fz-primary: 20px;
+    @logo-fz-secondary: 14px;
+    @logo-txt-color: #000;
+    @logo-hover-color: #0877DB;
+    @logo-icon-bg: #FFF;
+}
+
+.logo {
+    .logo-settings();
+
+    margin: @logo-margin;
+    display: table;
+    width: @logo-width;
+    text-align: left;
+    text-decoration: none;
+    color: @logo-txt-color;
+
+    &:link,
+    &:visited {
+        color: @logo-txt-color;
+    }
+
+    a&:hover,
+    a&:visited:hover,
+    a&:focus,
+    a&:active {
+        color: @logo-hover-color;
+    }
+
+    /* decoration */
+    &-icon {
+        display: table-cell;
+        vertical-align: middle;
+        border-radius: 50%;
+        width: @logo-icon-width + @logo-gutter-width;
+
+        img {
+            display: block;
+            width: @logo-icon-width;
+            height: @logo-icon-width;
+            background: @logo-icon-bg;
+            border-radius: inherit;
+        }
+    }
+
+    &-txt {
+        display: table-cell;
+        vertical-align: middle;
+        line-height: 1.2;
+    }
+
+    &-name {
+        position: relative;
+        display: block;
+        font-size: @logo-fz-primary;
+        font-weight: bold;
+    }
+
+    &-title {
+        font-size: @logo-fz-secondary;
+    }
+}

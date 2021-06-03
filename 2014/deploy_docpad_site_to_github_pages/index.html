@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    
+    <title>Деплой Docpad-сайта на GitHub Pages</title>
+    <meta name="description" content="Решение проблемы с абсолютными путями и автоматизация выкладки сайта на хостинг">
+    <meta name="keywords" content="Paul Radzkov, web-developer, blog, html, css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+    <meta name="generator" content="DocPad v6.79.4">
+
+    
+    <link rel="stylesheet" href="/ui/default.css">
+    
+
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=A0RJW2vMdo">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png?v=A0RJW2vMdo" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png?v=A0RJW2vMdo" sizes="16x16">
+    <link rel="manifest" href="/manifest.json?v=A0RJW2vMdo">
+    <link rel="shortcut icon" href="/favicon.ico?v=A0RJW2vMdo">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml">
+    <link rel="canonical" href="https://furye.ru/2014/deploy_docpad_site_to_github_pages/">
+    <meta property="fb:pages" content="297287297277384">
+
+    <meta property="og:title" content="Деплой Docpad-сайта на GitHub Pages">
+<meta property="og:description" content="Решение проблемы с абсолютными путями и автоматизация выкладки сайта на хостинг">
+
+    <meta property="og:image" content="http://dmitriyfourier.github.io/i/og/og-paulradzkov-2014-deploy_docpad_site_to_github_pages.png">
+
+
+    <meta property="og:type" content="article">
+    <meta property="og:article:published_time" content="Fri Apr 25 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">
+    
+    <meta property="og:article:author" content="Павел Радьков">
+    
+    
+    <meta property="og:article:tag" content="docpad, github pages, docpad, github pages">
+    
+
+<meta property="og:locale" content="ru_RU">
+
+    <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@paul_radzkov">
+<meta name="twitter:title" content="Деплой Docpad-сайта на GitHub Pages">
+<meta name="twitter:description" content="Решение проблемы с абсолютными путями и автоматизация выкладки сайта на хостинг">
+
+<meta name="twitter:image" content="http://dmitriyfourier.github.io/i/og/og-paulradzkov-2014-deploy_docpad_site_to_github_pages.png">
+
+
+    
+<script>!function(e,a,n,t,g,c,i){e.GoogleAnalyticsObject=g,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(n),i=a.getElementsByTagName(n)[0],c.async=1,c.src="//www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-29416794-1","auto"),ga("require","linkid"),ga("send","pageview")</script>
+
+
+</head>
+<body class="allpage allpage-max-width allpage-stickyfooter layout-article" id="top">
+    <header class="allpage--header page-header">
+        <div class="article-nav">
+            <nav class="read-siblings">
+                <div class="navlinks">
+  <a href="/2014/markdown_cheatsheet/" title="Previous Post: Краткое руководство по Маркдауну" class="navlinks-prev">&laquo; Краткое руководство по Маркдауну</a>
+  <a href="/2014/free_substitution_for_helvetica_neue/" title="Next Post: Бесплатная замена платному Helvetica Neue" class="navlinks-next">Бесплатная замена платному Helvetica Neue &raquo;</a>
+</div>
+            </nav>
+            <nav class="site-navigation sticky-nav" id="sticker">
+                <div class="nav-icon nav-icon-centered">
+                    <a class="nav-icon-home" href="/" data-toggle="tooltip" data-placement="right" title="На главную">
+                        <svg id="ic-arrow-back-24px" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                        <span class="visuallyhidden">На главную</span>
+                    </a>
+                    <a class="nav-icon-top" href="#top" data-toggle="tooltip" data-placement="right" title="Наверх">
+                        <svg id="ic-arrow-upward-24px" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+                        </svg>
+                        <span class="visuallyhidden">Наверх</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <aside class="nav-placeholder content-width">
+            <div class="article-meta">
+            
+                <p class="date"><time datetime="Fri Apr 25 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">25 апреля 2014</time></p>
+            
+            </div>
+        </aside>
+        <div class="content-width">
+            <h1 class="article-title">Деплой Docpad-сайта на GitHub Pages</h1>
+        </div>
+        <div class="likely-container content-width">
+    
+    <div class="likely likely-big" data-url="https://furye.ru/2014/deploy_docpad_site_to_github_pages/">
+    
+        <div class="facebook" tabindex="0" role="link" aria-label="Поделиться в Фейсбуке"></div>
+        <div class="twitter" tabindex="0" role="link" aria-label="Поделиться в Твиттере" data-via="paul_radzkov"></div>
+        <div class="vkontakte" tabindex="0" role="link" aria-label="Поделиться в Контакте"></div>
+        <div class="telegram" tabindex="0" role="link" aria-label="Поделиться в Телеграме"></div>
+    </div>
+</div>
+
+    </header>
+    <aside class="content-width" style="display:none">
+        <div class="article-meta inlined">
+            
+            <span class="comments"><a href="#disqus_thread" data-disqus-identifier="deploy_docpad_site_to_github_pages">Комментарии</a></span>
+            
+            <span class="pageviews" style="display:none"></span>
+        </div>
+    </aside>
+    
+    <article class="allpage--body nav-placeholder content-width" role="main">
+        При деплое [Docpad](http://docpad.org/)-сайта на [GitHub Pages](https://pages.github.com/) столкнулся с некоторыми проблемами.
+
+1. Проблема с абсолютными путями: докпад по-умолчанию использует пути к ресурсам от корня домена, а на GH Pages url проекта будет выглядеть так `http://username.github.io/repository/`. Т.е. сайт находится в папке, а не в корне, и все пути к ресурсам недействительны. Конечно, можно купить собственное доменное имя, но это не мой случай. Нужно, чтобы на локалхосте url оставались абсолютными, а при деплое заменялись с учетом папки, в которую сайт деплоится.
+2. [Плагин для деплоя](https://github.com/docpad/docpad-plugin-ghpages) не заработал сразу и без настроек, как обещает разработчик.
+3. **Добавлено 6 мая 2018**: деплой из командной строки сломался после включения двухфакторной аутентификации на Гитхабе.
+
+Так как у меня не всё прошло гладко и очевидно, решил написать эту инструкцию.
+
+
+
+## Проблема с абсолютными путями
+
+Сначала разберёмся с абсолютными путями в докпаде.
+
+Установим плагин [Get Url Plugin for DocPad](https://github.com/Hypercubed/docpad-plugin-geturl/).
+
+Если ещё не создана, сделаем в конфиге докпада переменную `@site.url`:
+
+```coffeescript
+	templateData:
+		site:
+			# The production url of our website. Used in sitemap and rss feed
+			url: "http://paulradzkov.github.io/docpad-simpleblog"
+```
+
+И добавим отдельную конфигурацию для «development» окружения:
+
+```coffeescript
+	# =================================
+	# Environments
+
+	environments:
+		development:
+			templateData:
+				site:
+					url: 'http://localhost:9778'
+```
+
+Эта переменная — `@site.url` — будет подставляться префиксом ко всем путям и ссылкам в зависимости от того, работаем мы на локалхосте или выкатываем сайт на хостинг.
+
+Теперь нужно добавить хелпер «`@getUrl()`» ко всем «`href`» и «`src`» в шаблоне, в документах — везде, где встречаются абсолютные пути.
+
+Например, было:
+
+```html
+<%- @getBlock("styles").add(@site.styles).toHTML() %>
+
+<script src="/vendor/modernizr.js"></script>
+```
+
+Стало:
+
+```html
+<%- @getBlock("styles").add(@getUrl(@site.styles)).toHTML() %>
+
+<script src="<%= @getUrl('/vendor/modernizr.js') %>"></script>
+```
+
+Было:
+
+```html
+<ul class="nav-list">
+	<li><a href="/"><span>Blog</span></a></li>
+	<li><a href="/docs"><span>Documentation</span></a></li>
+	<li><a href="https://github.com/paulradzkov/docpad-simpleblog/issues"><span>Issues</span></a></li>
+	<li><a href="https://github.com/paulradzkov/docpad-simpleblog"><span>Source Code</span></a></li>
+</ul>
+```
+
+Стало:
+
+```html
+<ul class="nav-list">
+	<li><a href="<%= @getUrl('/') %>"><span>Blog</span></a></li>
+	<li><a href="<%= @getUrl('/docs') %>"><span>Documentation</span></a></li>
+	<li><a href="https://github.com/paulradzkov/docpad-simpleblog/issues"><span>Issues</span></a></li>
+	<li><a href="https://github.com/paulradzkov/docpad-simpleblog"><span>Source Code</span></a></li>
+</ul>
+```
+
+Было:
+
+```html
+<ul class="meta-data">
+	<li class="comments">
+		<a href="<%= @document.path %>#disqus_thread" data-disqus-identifier="<%= @document.disqusid %>">Комментарии</a>
+	</li>
+	<li class="tags-list">
+		<% for tag in @document.tags : %>
+			<a class="label-tag" href="<%= @getTagUrl(tag) %>"><%= tag %></a>
+		<% end %>
+	</li>
+</ul>
+```
+
+Стало:
+
+```html
+<ul class="meta-data">
+	<li class="comments">
+		<a href="<%= @getUrl(@document.path) %>#disqus_thread" data-disqus-identifier="<%= @document.disqusid %>">Комментарии</a>
+	</li>
+	<li class="tags-list">
+		<% for tag in @document.tags : %>
+			<a class="label-tag" href="<%= @getUrl(@getTagUrl(tag)) %>"><%= tag %></a>
+		<% end %>
+	</li>
+</ul>
+```
+
+И так далее.
+
+Теперь, когда мы запускаем <kbd class="cli" contenteditable="true">&zwj;<span contenteditable="false">docpad run</span>&zwj;</kbd>, ко всем путям подставляется `@site.url` из девелоперского окружения — `http://localhost:9778`. А когда <kbd class="cli" contenteditable="true">&zwj;<span contenteditable="false">docpad run --env static</span>&zwj;</kbd>, переменная `@site.url` равна нашему продакшен пути.
+
+## Деплой на GitHub Pages
+
+В репозитории создадим ветку «`gh-pages`». По инструкции это должна быть пустая ветка без истории, но об этом в дальнейшем позаботится плагин для деплоя.
+
+<figure>
+	![В репозитории проекта создадим ветку с именем «gh-pages»](/2014/deploy_docpad_site_to_github_pages/new_branch_gh-pages.png)
+	<figcaption>В репозитории проекта создадим ветку с именем «`gh-pages`»</figcaption>
+</figure>
+
+Установим [GitHub Pages Deployer Plugin for DocPad](https://github.com/docpad/docpad-plugin-ghpages).
+
+При попытке выполнить <kbd class="cli" contenteditable="true">&zwj;<span contenteditable="false">docpad deploy-ghpages --env static</span>&zwj;</kbd> у меня появляется ошибка:
+
+<figure>
+	![could not read Username for ’http://github.com’: No such file or directory](/2014/deploy_docpad_site_to_github_pages/gh-pages_deploy_error.png)
+	<figcaption>`could not read Username for ’http://github.com’: No such file or directory`</figcaption>
+</figure>
+
+Плагин не смог соединиться с моим аккаунтом на гитхабе. Чтобы показать плагину правильный путь с логином и паролем, добавим новый «remote» для репозитория. Для этого в консоли git выполним:
+
+<p><kbd class="cli" contenteditable="true">&zwj;<span contenteditable="false">git remote add deploy <span>https://</span>login:password@github.com/repo_owner/repo_name.git</span>&zwj;</kbd></p>
+
+Где «`deploy`» — это название удаленного репозитория. Можно выбрать любое, но переопределять «origin» я бы не советовал: у меня от этого локальная копия репозитория потеряла связь с Гитхабом.
+
+«`login`» и «`password`» — данные вашего аккаунта на Гитхабе.
+
+«`github.com/repo_owner/repo_name.git`» — путь к репозиторию проекта, в котором у вас есть права на запись. Это не обязательно должен быть ваш репозиторий, если вы коллаборатор, и у вас есть доступ на запись — вы можете деплоить туда проект.
+
+<figure>
+	![Добавление нового «remote» c логином и паролем](/2014/deploy_docpad_site_to_github_pages/adding_another_remote.png)
+	<figcaption>Добавление нового «remote» c логином и паролем. Эту процедуру нужно выполнить один раз для каждого локального репозитория</figcaption>
+</figure>
+
+А в конфиге докпада пропишем настройки для плагина:
+
+```coffeescript
+	# Plugins configurations
+	plugins:
+		ghpages:
+			deployRemote: 'deploy'
+			deployBranch: 'gh-pages'
+```
+
+Теперь можно выкатывать сайт:
+
+<kbd class="cli" contenteditable="true">&zwj;<span contenteditable="false">docpad deploy-ghpages --env static</span>&zwj;</kbd>
+
+## Двухфакторная аутентификация
+
+**Добавлено 6 мая 2018**
+
+Когда я включил двухфакторную аутентификацию на Гитхабе, деплой из командной строки перестал работать. Чтобы починить, вместо вашего пароля в настройках remote нужно подставить сгенерированный токен. Сгенерируйте его по этой [инструкции](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). Если кратко:
+
+1. На Гитхабе кликните по вашему аватару, потом **Settings** → **Developer settings** → **Personal access tokens** → **Generate new token**.
+2. Дайте токену любое имя, например, «Mac terminal» или «Windows cmd».
+3. Поставьте уровень доступа **repo**.
+4. Нажмите **Generate token**.
+5. Скопируйте полученный токен. Когда вы уйдете с этой страницы, токен уже нельзя будет посмотреть.
+
+Вам нужно добавить новый «remote» (или заменить существующий) с токеном вместо пароля:
+
+<p><kbd class="cli" contenteditable="true">&zwj;<span contenteditable="false">git remote add deploy <span>https://</span>login:<mark>token</mark>@github.com/repo_owner/repo_name.git</span>&zwj;</kbd></p>
+
+И всё снова заработает.
+    </article>
+    <div class="content-width allpage--article-footer">
+        <div class="row row-between-xs row-center-xs">
+            <div class="col-xs-12 col-sm-shrink col-zero-gutter">
+                <footer class="allpage--footer page-footer content-width copyright">
+	<p class="space-out-bottom-mili-xs">
+		© Павел Радьков
+		
+			2014.
+		
+        <br>
+		
+	</p>
+</footer>
+
+            </div>
+            <div class="col-xs-12 col-sm-shrink col-zero-gutter">
+                <div class="likely-container content-width">
+    
+    <div class="likely" data-url="https://furye.ru/2014/deploy_docpad_site_to_github_pages/">
+    
+        <div class="facebook" tabindex="0" role="link" aria-label="Поделиться в Фейсбуке">Поделиться</div>
+        <div class="twitter" tabindex="0" role="link" aria-label="Поделиться в Твиттере" data-via="paul_radzkov">Твитнуть</div>
+        <div class="vkontakte" tabindex="0" role="link" aria-label="Поделиться в Контакте">Поделиться</div>
+        <div class="telegram" tabindex="0" role="link" aria-label="Поделиться в Телеграме">Телеграфировать</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <div class="disqus-wrapper">
+        <article id="disqus_thread" class="disqus-container">
+            <noscript>Включите Javascript, чтобы увидеть комментарии.</noscript>
+        </article>
+    </div>
+    
+    <nav class="navigation row">
+    
+        <section class="col-xs-min navigation-item inactive">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Tue Jul 04 2017 05:00:00 GMT+0500 (Екатеринбург, стандартное время)">04 июля 2017</time></li>
+            </ul>
+            <p><a href="/2017/local_variables/">Как правильно использовать переменные в препроцессорах Less и Sass</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive faq code-review">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sat Feb 13 2016 05:00:00 GMT+0500 (Екатеринбург, стандартное время)">13 февраля 2016</time></li>
+            </ul>
+            <p><a href="/2016/code_review/">Как верстальщику получить код ревью</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive fonts typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Fri May 02 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">02 мая 2014</time></li>
+            </ul>
+            <p><a href="/2014/web-fonts_license/">Веб-лицензии для платных шрифтов могут стоить вам дорого</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive fonts typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Thu May 01 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">01 мая 2014</time></li>
+            </ul>
+            <p><a href="/2014/free_substitution_for_helvetica_neue/">Бесплатная замена платному Helvetica Neue</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item active docpad github-pages">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Fri Apr 25 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">25 апреля 2014</time></li>
+            </ul>
+            <p><a href="/2014/deploy_docpad_site_to_github_pages/">Деплой Docpad-сайта на GitHub Pages</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive tools markdown">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Mon Apr 07 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">07 апреля 2014</time></li>
+            </ul>
+            <p><a href="/2014/markdown_cheatsheet/">Краткое руководство по Маркдауну</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive people">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Mon Feb 10 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">10 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/designer-superstar/">О каких дизайнерах мечтают верстальщики</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive tools">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Feb 09 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">09 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/capture_screen_to_gif/">Захват экрана в GIF</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Thu Feb 06 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">06 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/font-weight_bolder/">Font-weight: bolder для шрифтов со множеством начертаний</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive html usability">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Tue Feb 04 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">04 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/mailto_parameters/">Параметры subject и body в mailto ссылках</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Jan 26 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">26 января 2014</time></li>
+            </ul>
+            <p><a href="/2014/visited_link_on_hover/">Посещённая ссылка при наведении</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Jan 19 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">19 января 2014</time></li>
+            </ul>
+            <p><a href="/2014/negation_css_selector/">CSS-селектор :not. Полезные примеры</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Thu Jan 24 2013 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">24 января 2013</time></li>
+            </ul>
+            <p><a href="/2013/lists_and_floats/">Списки и картинки с флоатами</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css progressive-enhancement">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Dec 09 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">09 декабря 2012</time></li>
+            </ul>
+            <p><a href="/2012/pointer-events/">Pointer-events</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive Chrome">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Tue Nov 27 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">27 ноября 2012</time></li>
+            </ul>
+            <p><a href="/2012/chrome_dev_tools/">Как отключить javascript в Google Chrome</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive svg css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Oct 28 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">28 октября 2012</time></li>
+            </ul>
+            <p><a href="/2012/crosswise/">Перечёркивание крест-накрест</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive tools">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Apr 08 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">08 апреля 2012</time></li>
+            </ul>
+            <p><a href="/2012/mobile_developing/">Отладка мобильных сайтов в Webkit. Инспектор кода на мобильных устройствах</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive photoshop">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Mar 18 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">18 марта 2012</time></li>
+            </ul>
+            <p><a href="/2012/photoshop_next_and_previous_layer/">Горячие клавиши для выбора предыдущего и следующего слоя в Photoshop</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Mar 11 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">11 марта 2012</time></li>
+            </ul>
+            <p><a href="/2012/html-entities_and_utf_codes/">HTML-сущности и их UTF-коды</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive photoshop">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Wed Feb 22 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">22 февраля 2012</time></li>
+            </ul>
+            <p><a href="/2012/photoshop_new_layer_based_slice/">Нарезка в Photoshop — New Layer Based Slice</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Feb 12 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">12 февраля 2012</time></li>
+            </ul>
+            <p><a href="/2012/autocomplete/">Как перекрасить поля с автозаполнением в Google Chrome</a></p>
+        </section>
+    
+</nav>
+
+        <script src="/vendor/modernizr.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/js/article.min.js"></script>
+
+        
+    
+    <script defer="defer" src="/js/output.min.js"></script>
+
+    
+    <script>var disqus_config=function(){this.page.url="https://furye.ru/2014/deploy_docpad_site_to_github_pages/",this.page.identifier="deploy_docpad_site_to_github_pages"};!function(){var t=document,e=t.createElement("script");e.src="https://paulradzkov.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script>
+
+
+    
+<script type="text/javascript">!function(t,e,a){(e[a]=e[a]||[]).push(function(){try{e.yaCounter22878469=new Ya.Metrika({id:22878469,webvisor:!0,clickmap:!0,trackLinks:!0,accurateTrackBounce:!0})}catch(t){}});function c(){n.parentNode.insertBefore(r,n)}var n=t.getElementsByTagName("script")[0],r=t.createElement("script");r.type="text/javascript",r.async=!0,r.src=("https:"==t.location.protocol?"https:":"http:")+"//mc.yandex.ru/metrika/watch.js","[object Opera]"==e.opera?t.addEventListener("DOMContentLoaded",c,!1):c()}(document,window,"yandex_metrika_callbacks")</script>
+<noscript><div><img src="//mc.yandex.ru/watch/22878469" style="position:absolute; left:-1px;" alt=""></div></noscript>
+
+
+    <script src="/ui/offline/offline.min.js"></script>
+
+</body>
+</html>

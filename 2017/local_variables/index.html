@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    
+    <title>Как правильно использовать переменные в препроцессорах Less и Sass</title>
+    <meta name="description" content="История архитектурной ошибки, её последствия, и три правила, благодаря которым вы сможете держать исходный код в порядке и снизить стоимость внесения изменений.">
+    <meta name="keywords" content="Paul Radzkov, web-developer, blog, html, css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    
+    <meta name="generator" content="DocPad v6.79.4">
+
+    
+    <link rel="stylesheet" href="/ui/article.css">
+    
+
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=A0RJW2vMdo">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png?v=A0RJW2vMdo" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png?v=A0RJW2vMdo" sizes="16x16">
+    <link rel="manifest" href="/manifest.json?v=A0RJW2vMdo">
+    <link rel="shortcut icon" href="/favicon.ico?v=A0RJW2vMdo">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="/atom.xml">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml">
+    <link rel="canonical" href="https://furye.ru/2017/local_variables/">
+    <meta property="fb:pages" content="297287297277384">
+
+    <meta property="og:title" content="Как правильно использовать переменные в препроцессорах Less и Sass">
+<meta property="og:description" content="История архитектурной ошибки, её последствия, и три правила, благодаря которым вы сможете держать исходный код в порядке и снизить стоимость внесения изменений.">
+
+    <meta property="og:image" content="http://dmitriyfourier.github.io/i/og/og-paulradzkov-2017-local_variables.png">
+
+
+    <meta property="og:type" content="article">
+    <meta property="og:article:published_time" content="Tue Jul 04 2017 05:00:00 GMT+0500 (Екатеринбург, стандартное время)">
+    
+    <meta property="og:article:author" content="Павел Радьков">
+    
+    
+    <meta property="og:article:tag" content="">
+    
+
+<meta property="og:locale" content="ru_RU">
+
+    <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@paul_radzkov">
+<meta name="twitter:title" content="Как правильно использовать переменные в препроцессорах Less и Sass">
+<meta name="twitter:description" content="История архитектурной ошибки, её последствия, и три правила, благодаря которым вы сможете держать исходный код в порядке и снизить стоимость внесения изменений.">
+
+<meta name="twitter:image" content="http://dmitriyfourier.github.io/i/og/og-paulradzkov-2017-local_variables.png">
+
+
+    
+<script>!function(e,a,n,t,g,c,i){e.GoogleAnalyticsObject=g,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(n),i=a.getElementsByTagName(n)[0],c.async=1,c.src="//www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-29416794-1","auto"),ga("require","linkid"),ga("send","pageview")</script>
+
+
+</head>
+<body class="allpage allpage-max-width allpage-stickyfooter layout-article" id="top">
+    <header class="allpage--header page-header">
+        <div class="article-nav">
+            <nav class="read-siblings">
+                <div class="navlinks">
+  <a href="/2016/code_review/" title="Previous Post: Как верстальщику получить код ревью" class="navlinks-prev">&laquo; Как верстальщику получить код ревью</a>
+  <a href="/2012/autocomplete/" title="Next Post: Как перекрасить поля с автозаполнением в Google Chrome" class="navlinks-next">Как перекрасить поля с автозаполнением в Google Chrome &raquo;</a>
+</div>
+            </nav>
+            <nav class="site-navigation sticky-nav" id="sticker">
+                <div class="nav-icon nav-icon-centered">
+                    <a class="nav-icon-home" href="/" data-toggle="tooltip" data-placement="right" title="На главную">
+                        <svg id="ic-arrow-back-24px" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                        <span class="visuallyhidden">На главную</span>
+                    </a>
+                    <a class="nav-icon-top" href="#top" data-toggle="tooltip" data-placement="right" title="Наверх">
+                        <svg id="ic-arrow-upward-24px" viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+                        </svg>
+                        <span class="visuallyhidden">Наверх</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <aside class="nav-placeholder content-width">
+            <div class="article-meta">
+            
+                <p class="date"><time datetime="Tue Jul 04 2017 05:00:00 GMT+0500 (Екатеринбург, стандартное время)">04 июля 2017</time></p>
+            
+            </div>
+        </aside>
+        <div class="content-width">
+            <h1 class="article-title">Как правильно использовать переменные в препроцессорах Less и Sass</h1>
+        </div>
+        <div class="likely-container content-width">
+    
+    <div class="likely likely-big" data-url="https://furye.ru/2017/local_variables/">
+    
+        <div class="facebook" tabindex="0" role="link" aria-label="Поделиться в Фейсбуке"></div>
+        <div class="twitter" tabindex="0" role="link" aria-label="Поделиться в Твиттере" data-via="paul_radzkov"></div>
+        <div class="vkontakte" tabindex="0" role="link" aria-label="Поделиться в Контакте"></div>
+        <div class="telegram" tabindex="0" role="link" aria-label="Поделиться в Телеграме"></div>
+    </div>
+</div>
+
+    </header>
+    <aside class="content-width" style="display:none">
+        <div class="article-meta inlined">
+            
+            <span class="comments"><a href="#disqus_thread" data-disqus-identifier="local_variables">Комментарии</a></span>
+            
+            <span class="pageviews" style="display:none"></span>
+        </div>
+    </aside>
+    
+    <article class="allpage--body nav-placeholder content-width article-grid" role="main">
+        История архитектурной ошибки, её последствия, и три правила, благодаря которым вы сможете держать исходный код в порядке и снизить стоимость внесения изменений.
+
+
+
+<a name="prehistory" id="prehistory"></a>
+
+<aside class="article-grid--incut article-grid--incut-row-3 space-out-top-mega-xl">
+    <ol class="local-nav">
+        <li><a href="#prehistory">Предыстория</a></li>
+        <li><a href="#problems">Проблемы</a></li>
+        <li><a href="#solutions">Как решать</a></li>
+        <li><a href="#onLess">Реализация на Less</a></li>
+        <li><a href="#onSass">Реализация в Sass</a></li>
+        <li><a href="#conclusion">Выводы</a></li>
+        <li><a href="#examples">Реальные примеры</a></li>
+        <li><a href="#bonus">Бонус-трек</a></li>
+        <li><a href="#disqus_thread" data-disqus-identifier="local_variables">Комментарии</a></li>
+    </ol>
+</aside>
+
+## Предыстория
+
+В 2014 году в компании начали редизайн проекта и в основу вёрстки мы положили свежий на тот момент Bootstrap 3.0.1. Использовали мы его не как отдельную стороннюю библиотеку, а тесно заинтегрировали с нашим собственным кодом: отредактировали переменные под наш дизайн и компилировали кастомизированный Бутстрап из Less исходников самостоятельно. Проект оброс собственными модулями, которые использовали бутстраповские переменные и добавляли в файл с настройками свои новые переменные.
+
+В тот момент я думал, что это правильный подход. Ведь код сразу компилируется с нужными значениями без переопределения стилей. CSS чистый, компактный и без повторений. Компоненты стилизованы с помощью глобальных настроек.
+
+Через год с небольшим редизайн закончился, проект вышел в продакшн, и мы взялись за технический долг. При попытке обновить Бутстрап до версии 3.6.x выяснилось, что смержить новый variables.less с нашим файлом настроек будет нелегко. В Бутстрапе переименовали или убрали часть переменных, добавили новые. Собственные компоненты Бутстрапа обновились без проблем, а вот наши компоненты падали при компиляции из-за этих изменений.
+
+<a name="problems" id="problems"></a>
+
+## Проблемы
+
+Мы проанализировали ситуацию и сформулировали проблемы.
+
+1. **Слишком связанный код.**
+
+  Сами компоненты лежали в отдельных файлах. Это создавало иллюзию, что компоненты независимые. Но компоненты использовали переменные, объявленные в отдельном файле variables.less, и без этого файла не работали. Нельзя было просто так взять и переместить компонент в другой проект. Приходилось тянуть за собой файл с настройками, который со временем превратился в помойку.
+
+2. **Слишком много глобальных переменных**.
+
+  У Бутстрапа было ≈400 переменных. Мы отключили неиспользуемые компоненты Бутстрапа, но переменные оставили в конфиге на случай, если снова понадобятся. Еще мы добавили сотню или полторы своих переменных. Все названия не запомнить, трудно быстро находить нужные. Даже с правилами именования и комментариями ориентироваться в конфиге из 500+ переменных тяжело.
+
+3. **Имена глобальных переменных вышли из-под контроля**.
+
+  Одна и та же переменная могла использоваться в разных файлах и отслеживать все её появления в коде было долго и трудно. Когда меняли значение переменной в одном компоненте, был риск поломать другие компоненты. Разработчики хардкодили, создавали новые переменные с похожими названиями и значениями и уже не следили за логикой именования.
+
+<a name="solutions" id="solutions"></a>
+
+## Как решать
+
+Я придумал три правила, которые помогли побороть наши проблемы:
+
+<ol class="ol-important space-in-h-zero-xs space-in-h-base-sm">
+    <li>
+        <p class="text-custom-number text-important text-center space-in-wide-base-xs space-in-wide-kilo-md space-out-v-base-xs space-minus-h-base-sm" data-number="1">**Переменная используется только в том файле, в котором объявлена.**</p>
+        <p>Правильно создавать все нужные переменные в файле самого компонента и не использовать переменные из других файлов. Тогда компоненты станут независимыми, их можно будет подключать и перемещать между проектами без поломок при компиляции. У каждого компонента собственный набор переменных, которые запрещено использовать в других компонентах и вызывать в других файлах. Когда переменные не выходят за пределы одного файла, легко увидеть, как они используются и на что влияют.</p>
+    </li>
+    <li>
+        <p class="text-custom-number text-important text-center space-in-wide-base-xs space-in-wide-kilo-md space-out-v-base-xs space-minus-h-base-sm" data-number="2">**Все переменные внутри компонента — локальные.**</p>
+        <p>Раз у каждого компонента свои переменные, пусть они будут локальными. Это избавит от проблем с именованием: в компонентах можно использовать переменные с одинаковыми именами и разными значениями — они не будут конфликтовать друг с другом.</p>
+    </li>
+    <li>
+        <p class="text-custom-number text-important text-center space-in-wide-base-xs space-in-wide-kilo-md space-out-v-base-xs space-minus-h-base-sm" data-number="3">**Глобальные переменные используются только внутри файла настроек.**</p>
+        <p>Благодаря первым двум правилам мы сильно сократим количество глобальных переменных, но они всё равно нужны. Глобальные переменные объявляются в главном файле проекта или в файле типа config.less. К ним тоже применяется правило №1 — переменные не используются за пределами своего файла. Это значит, что нельзя использовать глобальные переменные внутри файлов компонентов. Но существует способ не нарушая первого правила прокинуть значение глобальной переменной внутрь компонента. Как это сделать мы рассмотрим на примерах далее.</p>
+    </li>
+</ol>
+
+Третье правило избыточное. Соблюдая первые два, вы автоматически соблюдаете третье. Но в реальной жизни есть очень большой соблазн пойти по простейшему пути, не создавать локальную переменную, а по-быстрому использовать глобальную. Третье правило напоминает, что так делать вредно, что это создаёт ненужные зависимости и приводит к связыванию кода.
+
+Применим правила на практике.
+
+<a name="onLess" id="onLess"></a>
+
+## Реализация на Less
+
+Представим простейший компонент для стилизации страницы. Согласно правилу №1 создадим переменные внутри файла компонента.
+
+<aside class="article-grid--aside txt-aside">
+    <dl>
+        <dt>Правило 1</dt>
+        <dd>Переменная используется только в том файле, в котором объявлена.</dd>
+    </dl>
+</aside>
+
+<figure class="space-out-h-kilo-xl">
+    <div class="row row-middle-xs">
+        <section class="col-xs-12 col-md space-minus-right-giga-md">
+            <div class="browserframe" data-title="page.css">
+                ```css
+/* page.css */
+
+.page {
+    padding: 40px;
+    color: #000;
+    background-color: #fff;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Было.</strong> Пример кода компонента.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-1">
+            <p>↓</p>
+        </section>
+        <section class="col-xs-12 col-md">
+            <div class="browserframe" data-title="page.less">
+                ```less
+// page.less v0.1
+
+@padding: 40px;
+@txt-color: #000;
+@bg-color: #fff;
+
+.page {
+    padding: @padding;
+    color: @txt-color;
+    background-color: @bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Стало.</strong> Переменные объявлены в глобальной области видимости и у них слишком общие имена. Это плохо.</figcaption>
+        </section>
+    </div>
+</figure>
+
+В примере выше мы объявили переменные в глобальной области видимости и из-за этого они подвержены конфликту имён. Если в соседнем компоненте появится переменная с таким же именем, то компоненты поломают друг друга.
+
+
+### Локальные переменные
+
+**Область видимости** — это «пространство» между фигурными скобками селектора: { и } . Объявленные внутри фигурных скобок переменные работают только внутри этих скобок и внутри дочерних скобок, но их нельзя использовать снаружи.
+
+Если скобок вокруг нет, то это самый верхний уровень — **глобальная область видимости**.
+
+У переменной из дочерней области видимости приоритет выше, чем у одноименной переменной из родительской области видимости. У глобальных переменных самый низкий приоритет при совпадении имён.
+
+По правилу №2 сделаем переменные локальными — переместим их внутрь селектора.
+
+<aside class="article-grid--aside txt-aside">
+    <dl>
+        <dt>Правило 2</dt>
+        <dd>Все переменные внутри компонента — локальные.</dd>
+    </dl>
+</aside>
+
+<figure class="space-out-h-kilo-xl">
+    <div class="row row-middle-xs">
+        <section class="col-xs-12 col-md space-minus-right-giga-md space-auto-top-md">
+            <div class="browserframe" data-title="page.less">
+                ```less
+// page.less v0.1
+
+@padding: 40px;
+@txt-color: #000;
+@bg-color: #fff;
+
+.page {
+    padding: @padding;
+    color: @txt-color;
+    background-color: @bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Было.</strong> Глобальные переменные.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-1">
+            <p>↓</p>
+        </section>
+        <section class="col-xs-12 col-md">
+            <div class="browserframe" data-title="page.less">
+                ```less
+// page.less v0.2
+
+.page {
+    @padding: 40px;
+    @txt-color: #000;
+    @bg-color: #fff;
+
+    padding: @padding;
+    color: @txt-color;
+    background-color: @bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Стало.</strong> Переменные объявлены внутри селектора и не создают конфликта имён, потому что теперь они локальные.</figcaption>
+        </section>
+    </div>
+</figure>
+
+Теперь конфликта имен с другими компонентами не будет. Мы решили первую и вторую проблемы: получился изолированный сниппет без внешних зависимостей. Но я не знаю способа переопределить локальные переменные компонента в таком виде извне. Поэтому, чтобы кастомизировать компоненты глобальными переменными проекта, придумал другую форму записи.
+
+### Миксины как функции
+
+В Less можно использовать миксины как функции. Если внутри миксина создать переменные, а потом вызвать миксин внутри селектора, то переменные будут доступны в области видимости этого селектора.
+
+<aside class="article-grid--aside txt-aside">
+    <p>Читайте про <a href="http://lesscss.org/features/#mixins-as-functions-feature" target="_blank">миксины как функции</a> в документации Less.</p>
+</aside>
+
+Вынесем объявление переменных внутрь миксина `.page-settings()`, а потом вызовем его внутри селектора `.page`:
+
+<figure class="space-out-h-kilo-xl">
+    <div class="row row-middle-xs">
+        <section class="col-xs-12 col-md space-minus-right-giga-md">
+            <div class="browserframe" data-title="page.less">
+                ```less
+// page.less v0.2
+
+.page {
+    @padding: 40px;
+    @txt-color: #000;
+    @bg-color: #fff;
+
+    padding: @padding;
+    color: @txt-color;
+    background-color: @bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Было.</strong> Локальные переменные внутри селектора.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-1">
+            <p>↓</p>
+        </section>
+        <section class="col-xs-12 col-md">
+            <div class="browserframe" data-title="page.less">
+                ```less
+// page.less v0.3
+
+.page-settings() {
+    @padding: 40px;
+    @txt-color: #000;
+    @bg-color: #fff;
+}
+
+.page {
+    .page-settings();
+
+    padding: @padding;
+    color: @txt-color;
+    background-color: @bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Стало.</strong> Миксин доставляет переменные в зону видимости селектора.</figcaption>
+        </section>
+    </div>
+</figure>
+
+Переменные локализованы внутри глобального миксина. Когда мы вызвали миксин в коде, переменные стали доступны в области видимости селектора `.page`, но по прежнему остались локальными.
+
+Такой миксин не генерирует CSS код, его единственная задача — доставить переменные в нужную область видимости. Например, если вызвать этот миксин в глобальной области видимости, то и переменные станут глобальными. Но это то же самое, что сразу объявить переменные глобально.
+
+Вместо нескольких глобальных переменных с распространёнными именами мы создали один глобальный миксин. В проекте не должно быть двух одноименных компонентов, значит имя миксина будет уникальным.
+
+
+### Слияние миксинов
+
+В Less существует «ленивое вычисление» переменных: не обязательно объявлять Less-переменную перед её использованием, можно объявить после. В момент компиляции парсер Less найдет определение переменной и отрендерит значение этой переменной в CSS.
+
+<aside class="article-grid--aside article-grid--aside-row-2 txt-aside">
+    <p>Смотрите <a href="http://lesscss.org/features/#variables-feature-lazy-evaluation" target="_blank">примеры «Lazy Evaluation»</a> и <a href="http://lesscss.org/features/#variables-feature-default-variables" target="_blank">переопределения дефолтных переменных</a> в документации Less.</p>
+</aside>
+
+Если переопределить переменную, то во всех местах её использования в силу вступит значение из самого последнего определения, так как оно приоритетнее по порядку следования в исходном коде. В этом смысле переменные ведут себя как константы.
+
+Итак, переменные можно объявлять и до, и после использования, а миксины — это разновидность переменных. Если создать два миксина с одним и тем же именем и разным содержанием, то они объединяют свои внутренности. А если внутри миксинов есть переменные с одинаковыми именами, то происходит переопределение. Приоритет выше у последнего миксина.
+
+Рассмотрим три файла:
+
+<figure class="space-out-h-kilo-xl">
+    <div class="row row-bottom-xs row-center-xs row-middle-lg">
+        <section class="col-xs-12 col-md-6 col-lg-shrink col-xl space-minus-right-base-md space-minus-right-kilo-lg">
+            <div class="browserframe" data-title="projectname.less">
+                ```less
+// projectname.less
+
+@import 'normalize.css';
+@import 'typography.less';
+@import 'page.less';
+// и много других компонентов...
+
+@import 'config.less';
+```
+            </div>
+            <figcaption class="space-in-h-mili-md space-in-h-base-lg"><strong>Главный файл.</strong><br> Импортируем компоненты и конфиг. Конфиг — последним.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-6 col-lg-shrink col-xl space-minus-right-kilo-lg">
+            <div class="browserframe" data-title="page.less">
+                ```less
+// page.less v0.3
+
+.page-settings() {
+    @padding: 40px;
+    @txt-color: #000;
+    @bg-color: #fff;
+}
+
+.page {
+    .page-settings();
+
+    padding: @padding;
+    color: @txt-color;
+    background-color: @bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md space-in-h-base-lg"><strong>Компонент.</strong><br> Все переменные локальные и хранятся в миксине.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-shrink col-lg-shrink col-xl">
+            <div class="browserframe" data-title="config.less">
+                ```less
+// config.less
+
+@glob-text-color: white;
+@glob-bg-color: darkblue;
+
+// кастомизация компонентов
+.page-settings() {
+    @txt-color: @glob-text-color;
+    @bg-color: @glob-bg-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md space-in-h-base-lg"><strong>Конфиг проекта.</strong><br> Переопределяем параметры компонента с помощью миксина настроек.</figcaption>
+        </section>
+    </div>
+</figure>
+
+Всё самое интересное происходит в конфиге. Мы создали глобальные переменные и использовали их в этом же файле для кастомизации компонента.
+
+Миксин `.page-settings()` объявлен два раза. Первый раз внутри файла `page.less` с дефолтными значениями, второй раз в файле `config.less` с новыми значениями. На этапе компиляции миксины склеиваются, новые переменные переопределяют дефолтные и CSS рендерится с новыми значениями из файла конфигурации.
+
+<aside class="article-grid--aside txt-aside">
+    <dl>
+        <dt>Правило 3</dt>
+        <dd>Глобальные переменные используются только внутри файла настроек.</dd>
+    </dl>
+</aside>
+
+Обратите внимание, что `config.less` инклюдится последним в списке. Это нужно, чтобы объявление миксина в конфиге имело больший приоритет, чем исходное объявление в файле самого компонента. Настройки не применятся, если поставить `config.less` до компонента, потому что на миксины тоже действуют правило «последнее определение — самое сильное».
+
+Таким способом мы прокинули значения глобальных переменных внутрь файла компонента, не меняя исходный код компонента. При этом были соблюдены все три правила:
+
+1. переменные использовались только в своём файле, даже глобальные переменные не вызывались за пределами файла `config.less`;
+2. переменные компонента остались локальными и не засорили глобальную область видимости;
+3. глобальные переменные не использовались внутри компонента напрямую, но значения глобальных переменных хитрым способом попали внутрь компонента.
+
+
+### Ограничения
+
+Нельзя, чтобы имя глобальной переменной совпадало с именем локальной — получим рекурсию и CSS не скомпилируется.
+Чтобы не ошибиться, лучше все глобальные переменные записывать с префиксом.
+
+<figure class="space-out-h-kilo-xl">
+    <div class="row row-middle-xs">
+        <section class="col-xs-12 col-md space-minus-right-mega-md">
+            <div class="browserframe" data-title="config.less" style="background-color: #fff4f4;">
+                ```less
+// так нельзя
+
+@txt-color: white;
+
+.page-settings() {
+    // тут рекурсия и ошибка компиляции
+    @txt-color: @txt-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Неправильно.</strong> Рекурсивное определение переменной вызывает ошибку компиляции.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-1">
+            <p>↓</p>
+        </section>
+        <section class="col-xs-12 col-md">
+            <div class="browserframe" data-title="config.less">
+                ```less
+// правильно — с префиксом
+
+@glob-txt-color: white;
+
+.page-settings() {
+    // всё в порядке
+    @txt-color: @glob-txt-color;
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md"><strong>Правильно.</strong> У глобальных переменных свой префикс `glob-`, что исключает совпадение имён.</figcaption>
+        </section>
+    </div>
+</figure>
+
+<a name="onSass" id="onSass"></a>
+
+## Реализация в Sass
+
+Sass отличается от Less и больше похож на скриптовый язык программирования: нет «ленивых вычислений» и переменная должна быть обязательно объявлена до её использования в коде. Если определить переменную и использовать её в коде, а потом переопределить и использовать ещё раз, то в первый вызов получим исходное значение в CSS, а во второй вызов новое значение. Трюк с миксинами, как в Less, не пройдет. Но есть другие пути решения.
+
+Наборы переменных для настройки компонента удобно хранить в <dfn>map-объектах</dfn>. Это массив из пар «ключ: значение». Метод <dfn>map-get</dfn> извлекает конкретное значение из массива, метод <dfn>map-merge</dfn> объединяет два массива в один, дополняя или переписывая исходный массив.
+
+<aside class="article-grid--aside txt-aside">
+ <p>Читайте <a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps" target="_blank" rel="noopener">про Maps</a> в документации Sass.</p>
+</aside>
+
+Простейший компонент без возможности переопределения извне будет выглядеть так:
+
+<figure class="space-auto-h-xs" style="max-width: 50em;">
+    <div class="row row-middle-xs">
+        <section class="col-xs-12">
+            <div class="browserframe" data-title="page.scss">
+                ```scss
+// page.scss v0.1
+
+$page-settings: (
+    padding: 40px,
+    bg-color: #fff,
+    text-color: #000,
+);
+
+.page {
+    padding:          map-get($page-settings, padding);
+    background-color: map-get($page-settings, bg-color);
+    color:            map-get($page-settings, text-color);
+}
+```
+            </div>
+            <figcaption>Настройки хранятся в **map**-объекте и вызываются в коде с помощью **map-get**</figcaption>
+        </section>
+    </div>
+</figure>
+
+Чтобы настраивать компонент из другого файла, нужно предусмотреть возможность смержить внешний конфиг с исходными настройками. Рассмотрим три файла:
+
+<figure class="space-out-h-kilo-xl">
+    <div class="row row-bottom-xs row-center-xs">
+        <section class="col-xs-12 col-md-6 space-minus-right-kilo-md">
+            <div class="browserframe" data-title="projectname.scss">
+                ```scss
+// projectname.scss
+
+@import: 'config';
+
+@import: 'normalize';
+@import: 'typography';
+@import: 'page';
+// и много других компонентов...
+```
+            </div>
+            <figcaption class="space-in-h-mili-md space-in-h-base-lg"><strong>Главный файл.</strong><br> Сначала импортируем конфиг, потом компоненты.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md col-lg-6">
+            <div class="browserframe" data-title="config.scss">
+                ```scss
+// config.scss
+
+$glob-text-color: white;
+$glob-bg-color: darkblue;
+
+// кастомизируем
+$page-settings: (
+    bg-color: $glob-bg-color,
+    text-color: $glob-text-color,
+);
+```
+            </div>
+            <figcaption class="space-in-h-mili-md space-in-h-base-lg"><strong>Настройки.</strong><br> Создаём глобальные переменные и переопределяем параметры компонента.</figcaption>
+        </section>
+        <section class="col-xs-12 col-md-shrink">
+            <div class="browserframe" data-title="page.scss">
+                ```scss
+// page.scss v0.2
+
+$page-override: ( ); // [1]
+
+@if variable-exists(page-settings) {
+    $page-override: $page-settings; // [2]
+}
+
+$page-settings:  map-merge((
+    padding: 40px,
+    bg-color: #fff,
+    text-color: #000,
+), $page-override); // [3]
+
+.page {
+    padding:          map-get($page-settings, padding);
+    background-color: map-get($page-settings, bg-color);
+    color:            map-get($page-settings, text-color);
+}
+```
+            </div>
+            <figcaption class="space-in-h-mili-md space-in-h-base-lg"><strong>Компонент.</strong><br> Добавили проверку: а не существуют ли уже настройки, чтобы переопределить компонент?</figcaption>
+        </section>
+    </div>
+</figure>
+
+`[1]` — В компоненте мы сначала объявили переменную с пустым массивом  `$page-override`.
+
+`[2]` — Потом проверили, а не существует ли уже переменная `$page-settings`. И если она уже была объявлена в конфиге, то присвоили её значение переменной `$page-override`.
+
+`[3]` — И потом смержили исходный конфиг и `$page-override` в переменную `$page-settings`.
+
+Если массив `$page-settings` был объявлен ранее в глобальном конфиге, то `$page-override` перепишет настройки при слиянии. Иначе в переменной `$page-override` будет пустой массив, и в настройках останутся исходные значения.
+
+<aside class="article-grid--aside article-grid--aside-row-2 txt-aside">
+    <p>Я не знаю всех тонкостей Sass, может есть способ реализовать эту методику более красивым способом.</p>
+</aside>
+
+В результате, мы получаем всё те же преимущества, только в отличие от Less нам приходится переопределять все настройки заранее, перед их использованием в коде.
+
+<a name="conclusion" id="conclusion"></a>
+
+## Выводы
+
+Не важно на чем вы пишете — на Less, Sass, CSS c кастомными свойствами или Javascript — глобальных переменных должно быть как можно меньше.
+
+С CSS препроцессорами используйте три правила, которые помогут избежать хаоса:
+
+  1. **Переменная используется только в том файле, в котором объявлена.**
+  2. **Все переменные внутри компонента — локальные.**
+  3. **Глобальные переменные используются только внутри файла настроек.**
+
+Чтобы прокинуть глобальные настройки внутрь компонента, собирайте переменные в миксин (Less) или map-объект (Sass).
+
+Переопределяйте настройки в правильном месте: в Less — после инклюда, в Sass — перед инклюдом.
+
+<figure class="article-grid--fullscreen">
+    <img src="/2017/local_variables/local_variables_less@1x.png" width="1440" height="720" srcset="/2017/local_variables/local_variables_less@05x.png 0.5x, /2017/local_variables/local_variables_less@1x.png, /2017/local_variables/local_variables_less@2x.png 2x" alt="Правила управления переменными в препроцессорах и методика переопределения настроек в одной картинке">
+    <figcaption>
+        <p>Правила управления переменными в препроцессорах и методика переопределения настроек</p>
+    </figcaption>
+</figure>
+
+
+<a name="examples" id="examples"></a>
+
+## Реальные примеры
+
+Я сформулировал эту методику в декабре 2015 года для Less и с тех пор применяю её на рабочих и личных проектах.
+
+За полтора года появилось несколько публичных npm-пакетов. Посмотрите исходный код для лучшего понимания, как работает эта методика в реальных ситуациях.
+
+[bettertext.css](https://github.com/paulradzkov/bettertext.css/blob/master/bettertext.less) — типографика для сайтов. Настраивается при помощи 11 переменных, остальные 40 вычисляются по формулам. Вычисления идут отдельными миксином, чтобы была возможность переопределять формулы. У компонента нет ни одного класса, все стили применяются к тегам. Чтобы создать локальную область видимости, я поместил все селекторы по тегам в переменную — в Less это называется «detached ruleset».
+
+<aside class="article-grid--aside txt-aside space-auto-top-xl space-in-bottom-nano-xl">
+    <p>Читайте про <a href="http://lesscss.org/features/#detached-rulesets-feature" target="_blank">detached ruleset</a> в документации Less.</p>
+</aside>
+
+[links.less](https://github.com/paulradzkov/links.less/blob/master/links.less) — стили для ссылок с фокусом, анимацией и бледным подчеркиванием. У компонента кроме миксина с настройками есть дополнительные глобальные миксины для раскрашивания ссылок внутри ваших собственных селекторов.
+
+[flxgrid.css](https://github.com/paulradzkov/flxgrid.css/blob/master/flxgrid.less) — генератор HTML-сеток на флексах. Настраивается при помощи 5 переменных, генерирует классы для адаптивной сетки с любыми брейкпоинтами и любым количеством колонок. В компоненте вычисления и служебные миксины спрятаны внутрь локальной области видимости. Глобально виден только миксин с настройками.
+
+[space.less](https://github.com/paulradzkov/space.less/blob/master/space.less) — инструмент для управления отступами в вёрстке. Создан, чтобы работать в паре с сеткой flxgrid.css. Адаптивность у них настраивается одинаково, но space.less использует собственный миксин настройки и собственные локальные переменные — в коде space.less никак не связан с flxgrid.css.
+
+<a name="bonus" id="bonus"></a>
+
+## «Бонус-трек»
+
+Если бы мне сейчас понадобилось использовать на новом проекте Bootstrap 3.x.x — тот, который на Less, — я бы все импортируемые модули Бутстрапа завернул в переменную (в «detached ruleset»), а все настройки из файла `variables.less` в миксин `bootsrtap-settings`. Глобальные переменные Бутстрапа перестали бы быть глобальными и их невозможно было бы использовать внутри собственного кода. Настройки Бутстрапа я бы кастомизировал по мере необходимости, вызывая миксин `bootsrtap-settings` в конфиге проекта, так же как в примерах выше. Тогда при обновлениях Бутстрапа пришлось бы поправить только миксин с кастомизированными настройкам.
+    </article>
+    <div class="content-width allpage--article-footer">
+        <div class="row row-between-xs row-center-xs">
+            <div class="col-xs-12 col-sm-shrink space-in-h-zero-xs">
+                <footer class="allpage--footer page-footer content-width copyright">
+	<p class="space-out-bottom-mili-xs">
+		© Павел Радьков
+		
+			2017.
+		
+        <br>
+		
+	</p>
+</footer>
+
+            </div>
+            <div class="col-xs-12 col-sm-shrink space-in-h-zero-xs">
+                <div class="likely-container content-width">
+    
+    <div class="likely" data-url="https://furye.ru/2017/local_variables/">
+    
+        <div class="facebook" tabindex="0" role="link" aria-label="Поделиться в Фейсбуке">Поделиться</div>
+        <div class="twitter" tabindex="0" role="link" aria-label="Поделиться в Твиттере" data-via="paul_radzkov">Твитнуть</div>
+        <div class="vkontakte" tabindex="0" role="link" aria-label="Поделиться в Контакте">Поделиться</div>
+        <div class="telegram" tabindex="0" role="link" aria-label="Поделиться в Телеграме">Телеграфировать</div>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <div class="disqus-wrapper">
+        <article id="disqus_thread" class="disqus-container">
+            <noscript>Включите Javascript, чтобы увидеть комментарии.</noscript>
+        </article>
+    </div>
+    
+    <nav class="navigation row">
+    
+        <section class="col-xs-min navigation-item active">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Tue Jul 04 2017 05:00:00 GMT+0500 (Екатеринбург, стандартное время)">04 июля 2017</time></li>
+            </ul>
+            <p><a href="/2017/local_variables/">Как правильно использовать переменные в препроцессорах Less и Sass</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive faq code-review">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sat Feb 13 2016 05:00:00 GMT+0500 (Екатеринбург, стандартное время)">13 февраля 2016</time></li>
+            </ul>
+            <p><a href="/2016/code_review/">Как верстальщику получить код ревью</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive fonts typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Fri May 02 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">02 мая 2014</time></li>
+            </ul>
+            <p><a href="/2014/web-fonts_license/">Веб-лицензии для платных шрифтов могут стоить вам дорого</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive fonts typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Thu May 01 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">01 мая 2014</time></li>
+            </ul>
+            <p><a href="/2014/free_substitution_for_helvetica_neue/">Бесплатная замена платному Helvetica Neue</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive docpad github-pages">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Fri Apr 25 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">25 апреля 2014</time></li>
+            </ul>
+            <p><a href="/2014/deploy_docpad_site_to_github_pages/">Деплой Docpad-сайта на GitHub Pages</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive tools markdown">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Mon Apr 07 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">07 апреля 2014</time></li>
+            </ul>
+            <p><a href="/2014/markdown_cheatsheet/">Краткое руководство по Маркдауну</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive people">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Mon Feb 10 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">10 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/designer-superstar/">О каких дизайнерах мечтают верстальщики</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive tools">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Feb 09 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">09 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/capture_screen_to_gif/">Захват экрана в GIF</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Thu Feb 06 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">06 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/font-weight_bolder/">Font-weight: bolder для шрифтов со множеством начертаний</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive html usability">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Tue Feb 04 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">04 февраля 2014</time></li>
+            </ul>
+            <p><a href="/2014/mailto_parameters/">Параметры subject и body в mailto ссылках</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Jan 26 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">26 января 2014</time></li>
+            </ul>
+            <p><a href="/2014/visited_link_on_hover/">Посещённая ссылка при наведении</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Jan 19 2014 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">19 января 2014</time></li>
+            </ul>
+            <p><a href="/2014/negation_css_selector/">CSS-селектор :not. Полезные примеры</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css typography">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Thu Jan 24 2013 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">24 января 2013</time></li>
+            </ul>
+            <p><a href="/2013/lists_and_floats/">Списки и картинки с флоатами</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css progressive-enhancement">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Dec 09 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">09 декабря 2012</time></li>
+            </ul>
+            <p><a href="/2012/pointer-events/">Pointer-events</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive Chrome">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Tue Nov 27 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">27 ноября 2012</time></li>
+            </ul>
+            <p><a href="/2012/chrome_dev_tools/">Как отключить javascript в Google Chrome</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive svg css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Oct 28 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">28 октября 2012</time></li>
+            </ul>
+            <p><a href="/2012/crosswise/">Перечёркивание крест-накрест</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive tools">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Apr 08 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">08 апреля 2012</time></li>
+            </ul>
+            <p><a href="/2012/mobile_developing/">Отладка мобильных сайтов в Webkit. Инспектор кода на мобильных устройствах</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive photoshop">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Mar 18 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">18 марта 2012</time></li>
+            </ul>
+            <p><a href="/2012/photoshop_next_and_previous_layer/">Горячие клавиши для выбора предыдущего и следующего слоя в Photoshop</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Mar 11 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">11 марта 2012</time></li>
+            </ul>
+            <p><a href="/2012/html-entities_and_utf_codes/">HTML-сущности и их UTF-коды</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive photoshop">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Wed Feb 22 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">22 февраля 2012</time></li>
+            </ul>
+            <p><a href="/2012/photoshop_new_layer_based_slice/">Нарезка в Photoshop — New Layer Based Slice</a></p>
+        </section>
+    
+        <section class="col-xs-min navigation-item inactive css">
+            <ul class="meta-data meta-data-badge">
+                <li class="date"><time datetime="Sun Feb 12 2012 06:00:00 GMT+0600 (Екатеринбург, стандартное время)">12 февраля 2012</time></li>
+            </ul>
+            <p><a href="/2012/autocomplete/">Как перекрасить поля с автозаполнением в Google Chrome</a></p>
+        </section>
+    
+</nav>
+
+        <script src="/vendor/modernizr.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/js/article.min.js"></script>
+
+        
+    
+    <script defer="defer" src="/js/output.min.js"></script>
+
+    
+    <script>var disqus_config=function(){this.page.url="https://furye.ru/2017/local_variables/",this.page.identifier="local_variables"};!function(){var e=document,t=e.createElement("script");t.src="https://paulradzkov.disqus.com/embed.js",t.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(t)}()</script>
+
+
+    
+<script type="text/javascript">!function(t,e,a){(e[a]=e[a]||[]).push(function(){try{e.yaCounter22878469=new Ya.Metrika({id:22878469,webvisor:!0,clickmap:!0,trackLinks:!0,accurateTrackBounce:!0})}catch(t){}});function c(){n.parentNode.insertBefore(r,n)}var n=t.getElementsByTagName("script")[0],r=t.createElement("script");r.type="text/javascript",r.async=!0,r.src=("https:"==t.location.protocol?"https:":"http:")+"//mc.yandex.ru/metrika/watch.js","[object Opera]"==e.opera?t.addEventListener("DOMContentLoaded",c,!1):c()}(document,window,"yandex_metrika_callbacks")</script>
+<noscript><div><img src="//mc.yandex.ru/watch/22878469" style="position:absolute; left:-1px;" alt=""></div></noscript>
+
+
+    <script src="/ui/offline/offline.min.js"></script>
+
+</body>
+</html>
