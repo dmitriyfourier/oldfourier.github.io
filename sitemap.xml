@@ -1,34 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url> <loc>http://dmitriyfourier.github.io/2012/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/autocomplete/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/chrome_dev_tools/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/crosswise/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/html-entities_and_utf_codes/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/mobile_developing/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2013/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/photoshop_new_layer_based_slice/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/photoshop_next_and_previous_layer/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2013/gaussian_blur/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2012/pointer-events/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2013/lists_and_floats/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/capture_screen_to_gif/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/deploy_docpad_site_to_github_pages/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/designer-superstar/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/font-weight_bolder/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/free_substitution_for_helvetica_neue/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/mailto_parameters/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/markdown_cheatsheet/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/negation_css_selector/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/visited_link_on_hover/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2014/web-fonts_license/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2016/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2017/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/demo/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/offline/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/search/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2016/code_review/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
-<url> <loc>http://dmitriyfourier.github.io/2017/local_variables/</loc> <lastmod>2021-05-17</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://furye.ru/offline/</loc> <lastmod>2021-06-04</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://furye.ru/search/</loc> <lastmod>2021-06-04</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://furye.ru/</loc> <lastmod>2021-06-05</lastmod> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
 </urlset>
