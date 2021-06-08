@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Заметки Димы Фурье</title>
-    <subtitle>Заметки Димы Фурье.</subtitle>
+    <subtitle>Финансовый директор, пишет про управление, финансы и предпринимательство.</subtitle>
     <link href="https://furye.ru/atom.xml" rel="self" />
     <link href="https://furye.ru" />
-    <updated>2021-06-08T18:01:27.225Z</updated>
-    <id>http://furye.ru</id>
+    <updated>2021-06-08T18:03:53.397Z</updated>
+    <id>https://furye.ru</id>
     <author>
         <name>Дмитрий Фурье</name>
         <email>dmitriyfurye@gmail.com</email>
